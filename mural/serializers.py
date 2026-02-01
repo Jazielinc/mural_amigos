@@ -1,13 +1,25 @@
 # mural/serializers.py
 from rest_framework import serializers
-from .models import Post, Profile
+from .models import Post, Profile, Comment
 from django.contrib.auth.models import User
 
 
 class ProfileSerializer(serializers.ModelSerializer):
+    user_id = serializers.ReadOnlyField(source='user.id')
+    username = serializers.ReadOnlyField(source='user.username')
+
     class Meta:
         model = Profile
-        fields = ['avatar', 'bio']
+        fields = ['user_id', 'username', 'avatar', 'bio']
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    autor_nombre = serializers.ReadOnlyField(source='autor.username')
+
+    class Meta:
+        model = Comment
+        fields = ['id', 'post', 'autor', 'autor_nombre', 'texto', 'fecha_creacion']
+        read_only_fields = ['autor']
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,8 +36,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     autor_nombre = serializers.ReadOnlyField(source='autor.username')
+    autor_avatar = serializers.SerializerMethodField()
+    comentarios = CommentSerializer(many=True, read_only=True)
 
-    autor_avatar = serializers.ReadOnlyField(source='autor.perfil.avatar.url')
+    def get_autor_avatar(self, obj):
+        if hasattr(obj.autor, 'perfil') and obj.autor.perfil.avatar:
+            return obj.autor.perfil.avatar.url
+        return None
 
     class Meta:
         model = Post
