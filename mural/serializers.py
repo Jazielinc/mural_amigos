@@ -19,6 +19,8 @@ class UserSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     autor_nombre = serializers.ReadOnlyField(source='autor.username')
 
+    autor_avatar = serializers.ReadOnlyField(source='autor.perfil.avatar.url')
+
     class Meta:
         model = Post
         fields = '__all__'

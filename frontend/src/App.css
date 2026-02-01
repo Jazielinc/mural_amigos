@@ -107,3 +107,49 @@ header h1 {
   border-top: 1px solid #e5e7eb; /* Línea separadora sutil */
   padding-top: 16px;
 }
+
+.post-footer {
+  display: flex;
+  align-items: center;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+  margin-top: 15px;
+}
+
+.avatar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Esto la hace circular */
+  object-fit: cover;  /* Evita que la foto se deforme */
+  margin-right: 12px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  font-size: 20px;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.post-location {
+  font-size: 0.75rem;
+  color: #888;
+}

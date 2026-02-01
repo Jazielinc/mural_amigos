@@ -106,7 +106,28 @@ function App() {
             <div className="post-content">
               <h3>{post.titulo}</h3>
               <p>{post.contenido_texto}</p>
-              <small>📍 {post.ubicacion_origen} — Por: {post.autor_nombre}</small>
+
+              {/* NUEVO PIE DE TARJETA CON AVATAR */}
+              <div className="post-footer">
+                
+                {post.autor_avatar ? (
+                  <img 
+                    /* Concatenamos la URL del servidor */
+                    src={`http://127.0.0.1:8000${post.autor_avatar}`} 
+                    alt={post.autor_nombre} 
+                    className="avatar-img"
+                  />
+                ) : (
+                  /* Si no tiene foto, mostramos un círculo gris genérico */
+                  <div className="avatar-placeholder">👤</div>
+                )}
+
+                <div className="author-info">
+                  <span className="author-name">{post.autor_nombre}</span>
+                  <span className="post-location">📍 {post.ubicacion_origen}</span>
+                </div>
+
+              </div>
             </div>
           </div>
         ))}
