@@ -1,8 +1,18 @@
 # mural/views.py
 from rest_framework import viewsets, permissions, generics
-from .models import Post
-from .serializers import PostSerializer, UserSerializer
+from .models import Post, Profile
+from .serializers import PostSerializer, UserSerializer, ProfileSerializer
 from django.contrib.auth.models import User
+
+
+class MyProfileView(generics.RetrieveUpdateAPIView):
+    serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        # Esto asegura que cada usuario solo vea y edite SU propio perfil
+        return self.request.user.perfil
+
 
 # 1. Vista para Registrar Usuarios (Sign Up)
 class SignUpView(generics.CreateAPIView):
