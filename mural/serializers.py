@@ -1,7 +1,13 @@
 # mural/serializers.py
 from rest_framework import serializers
-from .models import Post
+from .models import Post, Profile
 from django.contrib.auth.models import User
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['avatar', 'bio']
 
 
 class UserSerializer(serializers.ModelSerializer):
