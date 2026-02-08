@@ -50,6 +50,7 @@ class MuralTests(TestCase):
         self.assertEqual(Comment.objects.count(), 0)
 
     def test_delete_comment_non_author(self):
+        """Ensure a user cannot delete a comment they did not author."""
         comment = Comment.objects.create(post=self.post1, autor=self.user2, texto='Comentario 1')
         self.client.force_authenticate(user=self.user1)
         response = self.client.delete(f'/api/comments/{comment.id}/')
