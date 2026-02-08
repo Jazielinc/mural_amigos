@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth.models import User
 from rest_framework.test import APIClient
 from rest_framework import status
-from .models import Post, Comment
+from .models import Post, Comment, Profile
 
 class MuralTests(TestCase):
     def setUp(self):
@@ -55,3 +55,30 @@ class MuralTests(TestCase):
         response = self.client.delete(f'/api/comments/{comment.id}/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
         self.assertEqual(Comment.objects.count(), 1)
+
+    def test_profile_creation_signal(self):
+        # Verificar que se crea un perfil automáticamente al crear un usuario
+        new_user = User.objects.create_user(username='newuser', password='password')
+        self.assertTrue(Profile.objects.filter(user=new_user).exists())
+
+    def test_create_post_api(self):
+        self.client.force_authenticate(user=self.user1)
+        data = {
+            'titulo': 'Nuevo Post API',
+            'contenido_texto': 'Contenido desde API',
+            'tipo': 'TEXTO',
+            'ubicacion_origen': 'Test City'
+        }
+        response = self.client.post('/api/posts/', data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Post.objects.count(), 2) # 1 en setUp + 1 nuevo
+        new_post = Post.objects.get(titulo='Nuevo Post API')
+        self.assertEqual(new_post.autor, self.user1)
+
+    def test_list_posts_api(self):
+        self.client.force_authenticate(user=self.user1)
+        response = self.client.get('/api/posts/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        # Debería haber al menos el post creado en setUp
+        self.assertTrue(len(response.data) >= 1)
+        self.assertEqual(response.data[0]['titulo'], 'Post 1')
