@@ -203,8 +203,16 @@ function App() {
                   {/* COMENTARIOS */}
                   <div className="comments-section" style={{ marginTop: '15px', borderTop: '1px solid #eee', paddingTop: '10px' }}>
                     {post.comentarios && post.comentarios.map(comment => (
-                        <div key={comment.id} style={{ fontSize: '0.9em', marginBottom: '5px', textAlign: 'left' }}>
-                            <strong>{comment.autor_nombre}:</strong> {comment.texto}
+                        <div key={comment.id} style={{
+                            fontSize: '0.9em',
+                            marginBottom: '8px',
+                            textAlign: 'left',
+                            backgroundColor: '#f9fafb',
+                            padding: '8px',
+                            borderRadius: '5px',
+                            color: '#1f2937'
+                        }}>
+                            <strong style={{ color: '#4b5563' }}>{comment.autor_nombre}:</strong> {comment.texto}
                         </div>
                     ))}
                     <div style={{ display: 'flex', marginTop: '10px' }}>
