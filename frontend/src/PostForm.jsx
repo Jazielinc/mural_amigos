@@ -87,7 +87,7 @@ function PostForm({ onPostCreated }) {
         )}
 
         {modo === 'LINK' && (
-          <input type="url" placeholder="https://..." value={url} onChange={(e) => setUrl(e.target.value)} required 
+          <input type="url" placeholder="https://instagram.com/p/..., https://youtu.be/..." value={url} onChange={(e) => setUrl(e.target.value)} required
             style={{ padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }}
           />
         )}

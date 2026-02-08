@@ -5,6 +5,7 @@ import Masonry from 'react-masonry-css'
 import PostForm from './PostForm';
 import ProfileForm from './ProfileForm'; // <--- Importar
 import Auth from './Auth'; // <--- Importamos el componente de login
+import { SocialEmbed } from './SocialEmbed';
 import './App.css'
 
 function App() {
@@ -167,11 +168,7 @@ function App() {
                   <video controls src={post.video} style={{ width: '100%', display: 'block', backgroundColor: '#000' }} />
                 )}
                 {post.tipo === 'LINK' && (
-                   <div style={{ padding: '10px', backgroundColor: '#f3f4f6', textAlign: 'center' }}>
-                     <a href={post.url_externa} target="_blank" rel="noopener noreferrer" style={{color: '#2563EB', fontWeight: 'bold'}}>
-                       🔗 Ver enlace original
-                     </a>
-                   </div>
+                   <SocialEmbed url={post.url_externa} />
                 )}
                 
                 <div className="post-content">
